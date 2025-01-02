@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Peso para Portas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Logo acima do título -->
+        <img src="imagens/pic01.png" alt="Logo da Empresa" class="logo">
+
+        <h1>Calculadora de Peso para Portas</h1>
+        <form id="weightForm">
+            <!-- Seleção do modelo da porta -->
+            <div class="escolhas">
+                <div class="input-group">
+                    <label for="modelo">Modelo da Porta:</label>
+                    <select id="modelo" onchange="atualizarMassaPerfil()">
+                        <option value="1.2">Modelo A (1.2 kg/m)</option>
+                        <option value="1.5">Modelo B (1.5 kg/m)</option>
+                        <option value="1.8">Modelo C (1.8 kg/m)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="espessuraVidro">Espessura do Vidro:</label>
+                    <select id="espessuraVidro" onchange="atualizarDensidadeVidro()">
+                        <option value="7.5">3 mm</option>
+                        <option value="10">4 mm</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grupo de entrada para largura e altura -->
+            <div class="dimensoes">
+                <div class="input-group">
+                    <label for="larguraMM">Largura (mm):</label>
+                    <input type="number" id="larguraMM" step="1" placeholder="Ex: 1200" required>
+                </div>
+                <div class="input-group">
+                    <label for="alturaMM">Altura (mm):</label>
+                    <input type="number" id="alturaMM" step="1" placeholder="Ex: 2100" required>
+                </div>
+            </div>
+            
+            <button type="button" onclick="calcularPeso()">Calcular Peso</button>
+        </form>
+        <div id="resultado"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
