@@ -1,5 +1,66 @@
-let massaPerfil = 1.2; // Valor padrão para o perfil (modelo A)
-let densidadeVidro = 25; // Densidade padrão para vidro de 3 mm
+const url = "https://docs.google.com/spreadsheets/d/1FPC9CEtkGzKwj_64NINn1cUJhmMVjUPcxnIcgBsw9Jg/gviz/tq?tqx=out:csv&sheet=principal";
+
+const portas = async () => {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const csvData = await response.text();
+        const rows = csvData.split("\n").map(row => row.split(","));
+
+        // A primeira linha contém os cabeçalhos (chaves dos objetos)
+        const headers = rows.shift();
+
+        // Mapeia cada linha para um objeto e remove aspas extras
+        let formattedData = rows.map(row => {
+            const obj = {};
+            headers.forEach((header, index) => {
+                const value = row[index]?.trim().replace(/^"|"$/g, "") || ""; // Remove aspas duplas no início e no fim
+                obj[header.trim().replace(/^"|"$/g, "")] = value;
+            });
+            return obj;
+        });
+
+        // Converte a propriedade "valor" para número
+        formattedData = formattedData.map(item => ({
+            ...item,
+            valor: Number(item.valor)
+        }));
+
+        console.log(formattedData); // Lista de objetos
+        return formattedData;
+    } catch (error) {
+        console.error("Erro ao buscar ou processar dados:", error);
+    }
+};
+
+// Preenche o select com os valores dinâmicos
+async function preencherSelect() {
+    const select = document.getElementById('modelo');
+    try {
+        const dadosPortas = await portas(); // Aguarda os dados serem carregados
+        if (dadosPortas && Array.isArray(dadosPortas)) {
+            dadosPortas.forEach(porta => {
+                const option = document.createElement('option');
+                option.value = porta.valor;
+                option.textContent = porta.porta; // Texto visível no dropdown
+                select.appendChild(option);
+            });
+        } else {
+            console.error("Os dados das portas não estão no formato esperado.");
+        }
+    } catch (error) {
+        console.error("Erro ao preencher o select:", error);
+    }
+}
+
+// Chama a função para preencher o select
+preencherSelect();
+
+let massaPerfil = 0.454; // Valor padrão para o perfil (modelo A)
+let densidadeVidro = 7.5; // Densidade padrão para vidro de 3 mm
 
 // Função para atualizar a massa do perfil de acordo com o modelo selecionado
 function atualizarMassaPerfil() {
