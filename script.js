@@ -61,19 +61,30 @@ preencherSelect();
 
 let massaPerfil = 0.454; // Valor padrão para o perfil VT2163
 let densidadeVidro = 10; // Densidade padrão para vidro de 4 mm
+let modeloSelecionado = ''; // Variável para armazenar o modelo selecionado
 
 // Função para atualizar a massa do perfil de acordo com o modelo selecionado
 function atualizarMassaPerfil() {
     const modeloSelect = document.getElementById('modelo');
+    modeloSelecionado = modeloSelect.options[modeloSelect.selectedIndex].text; // Usamos o nome do modelo
     massaPerfil = parseFloat(modeloSelect.value);
+    atualizarDensidadeVidro(); // Atualiza a densidade do vidro sempre que o modelo for alterado
 }
 
 // Função para atualizar a densidade do vidro de acordo com a espessura selecionada
 function atualizarDensidadeVidro() {
     const espessuraSelect = document.getElementById('espessuraVidro');
-    densidadeVidro = parseFloat(espessuraSelect.value);
+    const espessuraSelecionada = espessuraSelect.value;
+    densidadeVidro = parseFloat(espessuraSelecionada);
+
+    // Verifica se o vidro de 4mm foi selecionado e se o modelo requer duplicar o peso
+    if (espessuraSelecionada === "10" && (modeloSelecionado === "AREZZO" || modeloSelecionado === "FLORENÇA" ||
+        modeloSelecionado === "VALLEY" || modeloSelecionado === "IMPERIALLE")) {
+        densidadeVidro *= 2; // Duplicar o peso do vidro de 4mm
+    }
 }
 
+// Função para calcular o peso total
 function calcularPeso() {
     // Obtém os valores de entrada
     const larguraMM = parseFloat(document.getElementById('larguraMM').value);
@@ -91,7 +102,7 @@ function calcularPeso() {
 
     // Calcula o peso do perfil de alumínio
     const pesoRequadro = (alturaM + larguraM) * 2 * massaPerfil;
-    
+
     // Calcula o peso do vidro
     const area = larguraM * alturaM;
     const pesoVidro = area * densidadeVidro;
