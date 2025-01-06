@@ -92,6 +92,11 @@ function calcularPeso() {
     // Calcula o peso do perfil de alumínio
     const pesoRequadro = (alturaM + larguraM) * 2 * massaPerfil;
 
+    // Verifica se o perfil é "AREZZO" e ajusta o cálculo
+    if (modeloSelecionado === "AREZZO") {
+        pesoVidro *= 2; // Multiplica por 2 para o perfil "AREZZO"
+    }
+    
     // Calcula o peso do vidro
     const area = larguraM * alturaM;
     const pesoVidro = area * densidadeVidro;
