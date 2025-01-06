@@ -18,10 +18,14 @@ body {
 }
 
 .logo {
+    display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 250px; /* Ajuste conforme o tamanho da sua logo */
-    margin-bottom: 10px; /* Espaçamento entre a logo e o título */
+    max-width: 250px;
+    margin: 0 auto;
+    /* Centraliza horizontalmente */
+    margin-bottom: 0px;
+    /* Espaçamento entre a logo e o título */
 }
 
 h1 {
