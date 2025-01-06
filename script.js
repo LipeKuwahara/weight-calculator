@@ -59,8 +59,8 @@ async function preencherSelect() {
 // Chama a função para preencher o select
 preencherSelect();
 
-let massaPerfil = 0.454; // Valor padrão para o perfil (modelo A)
-let densidadeVidro = 7.5; // Densidade padrão para vidro de 3 mm
+let massaPerfil = 0.454; // Valor padrão para o perfil VT2163
+let densidadeVidro = 10; // Densidade padrão para vidro de 4 mm
 
 // Função para atualizar a massa do perfil de acordo com o modelo selecionado
 function atualizarMassaPerfil() {
